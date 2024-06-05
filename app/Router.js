@@ -9,6 +9,20 @@ export const Router = function(){
     const publicRoute = routes.public.find(route => route.path === path);
     const privateRoute = routes.private.find(route => route.path === path);
 
+    if(path === '/login' || path === '/'){
+        if(token){
+            NavigateTo('/dashboard');
+            return;
+        }
+    }
+
+    if(path === '/'){
+        if(!token){
+            NavigateTo('/login');
+            return
+        }
+    }
+
     if(publicRoute){
         publicRoute.scene();
         return

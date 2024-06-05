@@ -18,10 +18,17 @@ export const LoginScene = function(){
     <input type="password" class="form-control" placeholder="Enter password" required>
     </div>
     <button type="submit" class="btn btn-outline-success">Login</button>
+    <button id="register" class="btn btn-outline-primary">Register</button>
     </form>
     </div>
     </div>
     `;
+
+    const $btnRegister = document.getElementById('register');
+    $btnRegister.addEventListener('click', () => {
+            NavigateTo('/register');
+            return
+    });
 
     const $emailHtml = document.querySelector('input[type="email"]');
     const $passwordHtml = document.querySelector('input[type="password"]');
@@ -34,18 +41,15 @@ export const LoginScene = function(){
             alert('Llene todos los camposs')
         }
 
-        const usersArry = await fetchApi(`http://localhost:3000/Users?email=${$emailHtml.value}`);
-        const users = usersArry[0];
-        console.log(users, usersArry);
-        if(users.email !== $emailHtml.value || users.password !== $passwordHtml.value){
-            alert('Datos invalidos');
-            return;
-        }
-        if(users){
+        const users = await fetchApi(`http://localhost:3000/Users`);
+        const user = users.find(user => user.email === $emailHtml.value && user.password === $passwordHtml.value);
+        if(user){
             const token = Math.random().toString(36).substring(2);
             localStorage.setItem('token', token);
-            localStorage.setItem('roleId', users.roleId);
+            localStorage.setItem('roleId', user.roleId);
             NavigateTo('/dashboard');
+        }else{
+            alert('Credenciales incorrectas')
         }
     })
 }

@@ -1,5 +1,6 @@
 import styles from '../public/register/styles.scene.css'
 import { fetchApi } from "../../helpers/fetch-api";
+import { NavigateTo } from '../../Router';
 
 
 //Validacion 
@@ -24,9 +25,9 @@ export const CurrentFlights = function(){
         <h6 class="card-subtitle mb-2 text-body-secondary">Origin: ${flight.origin}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary">Destination: ${flight.destination}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary">Capacity Fly: ${flight.capacity}</h6>
-        <button data-id="${flight.id}" id="btnDelete" class="delete-class btn btn-outline-danger me-2" type="button">Elimiar</button>
-        <button data-id="${flight.id}" id="btnReserve" class="reserve-class btn btn-outline-info me-2" type="button">Reservar</button>
-        <button data-id="${flight.id}" id="btnEdit" class="edit-class btn btn-outline-dark me-2 mt-2" type="button">Editar</button>
+        <button data-id="${flight.id}" id="btnDelete" class="delete-class btn btn-outline-danger me-2" type="button">Eliminar</button>
+        <button data-reserve-id="${flight.id}" id="btnReserve" class="reserve-class btn btn-outline-info me-2" type="button">Reservar</button>
+        <button data-edit-id="${flight.id}" id="btnEdit" class="edit-class btn btn-outline-dark me-2 mt-2" type="button">Editar</button>
         <hr>
         </div>
         ` ).join('')}
@@ -66,8 +67,7 @@ export const CurrentFlights = function(){
                         method: "DELETE"
                     })
                     if (response) {
-                        console.log("Se eliminó el vuelo correctamente");
-                        
+                        NavigateTo("/dashboard");            
                     } else {
                         console.log("Error al eliminar el vuelo");
                     }
@@ -79,39 +79,41 @@ export const CurrentFlights = function(){
                 console.log("El usuario canceló la eliminación");
             }
         }
-
         const addReserve = async function(idFly){
-            const reserverAdd = await fetchApi("http://localhost:3000/Booking",{
-                method: "POST",
-                header:{
-                    "Content-Type": "application/json"
-                },
-                body:JSON.stringify({
-                    flightId: idFly,
-                    userId: roleId,
-                    bookingDate: new Date()
+            const confirmation = confirm("Deseas realizar la reserva?");
+            if(confirmation){
+                await fetchApi("http://localhost:3000/Booking",{
+                    method: "POST",
+                    header:{
+                        "Content-Type": "application/json"
+                    },
+                    body:JSON.stringify({
+                        flightId: idFly,
+                        userId: roleId,
+                        bookingDate: new Date()
+                    })
                 })
-            })
-            if(!reserverAdd){
-                console.log({message:"Error reserve flight"})
+            }else{
+                alert('Reserva cancelada');
                 return;
             }
-            console.log({message: "Reserved flight..."});
         }
-
-        const $buttonReserve = document.querySelectorAll('.reserve-class');
-        //const idFly = $buttonReserve.getAttribute('data-id');
-        $buttonReserve.forEach(button=>{
-            button.addEventListener("click",async()=>{
-                const confirmReserve = confirm("Do you want confirm the reserve?");
-                if(confirmReserve){
-                    console.log("Loading...")
-                    const date = new Date();
-                    await addReserve(date);
-                }
+        const $buttonReserves = document.querySelectorAll('.reserve-class');
+        const reserveBtnArray = [...$buttonReserves];
+        reserveBtnArray.forEach(button=>{
+            button.addEventListener("click", () =>{
+                const flightId = button.getAttribute('data-reserve-id');
+                addReserve(flightId);
             })
-        })
-        console.log($buttonReserve)
+        });
+
+        const $buttonEdit = document.querySelectorAll('.edit-class');
+        const editBtnArray = [...$buttonEdit];
+        editBtnArray.forEach(button => {
+            button.addEventListener('click', () => {
+                NavigateTo(`/dashboard/flights/edit?flightId=${button.getAttribute("data-edit-id")}`)
+            })
+        });
     };
 
     return {

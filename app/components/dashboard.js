@@ -7,7 +7,6 @@ export const DashboardLayout = function(pageContente, logic){
     <nav class="navbar bg-body-tertiary">
     <form class="container-fluid justify-content-start">
       <button id="btnFly" class="btn btn-outline-success me-2" type="button">Vuelos Actuales</button>
-      <button id="btnEdit" class="btn btn-outline-primary me-2" type="button">Editar Vuelos</button>
       <button id="btnCreate" class="btn btn-outline-dark me-2" type="button">Create Vuelos</button>
       <button class="btn btn-outline-secondary" type="button" id='btn-logout'>Logout</button>
     </form>
@@ -18,17 +17,9 @@ export const DashboardLayout = function(pageContente, logic){
 
     const $btnLogout = document.getElementById('btn-logout');
     $btnLogout.addEventListener('click', () => {
+        localStorage.removeItem('token')
         NavigateTo('/login')
     })
-
-    const $btnEdit = document.getElementById('btnEdit');
-    $btnEdit.addEventListener('click', () => {
-        if(roleId === "2"){
-            NavigateTo('/dashboard/flights/edit');
-            return
-        }
-        alert('No eres admin')
-    });
 
     const $btnCreate = document.getElementById('btnCreate');
     $btnCreate.addEventListener('click', () => {

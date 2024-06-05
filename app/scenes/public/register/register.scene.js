@@ -56,7 +56,7 @@ export const RegisterLoginScene = function () {
             },
             body: JSON.stringify({
                 name: $textHtml.value,
-                birthdate: Date($datelHtml.value),
+                birthdate: $datelHtml.value,
                 email: $emailHtml.value,
                 password: $passwordHtml.value,
                 roleId: "1"
