@@ -1,0 +1,70 @@
+{
+  "Flight": [
+    {
+      "id": "eae1",
+      "number": "099",
+      "origin": "Venezuela",
+      "destination": "España",
+      "departure": "Wed Jun 05 2024 10:15:07 GMT-0500 (hora estándar de Colombia)",
+      "arrival": "2024-06-14",
+      "capacity": "100"
+    }
+  ],
+  "Role": [
+    {
+      "id": "1",
+      "role": "User Visitor"
+    },
+    {
+      "id": "2",
+      "role": "User Administrator"
+    }
+  ],
+  "Users": [
+    {
+      "id": "e0fd",
+      "name": "brayan",
+      "birthdate": "Tue Jun 04 2024 15:28:49 GMT-0500 (hora estándar de Colombia)",
+      "email": "landa@gmail.com",
+      "password": "carolan",
+      "roleId": "2"
+    },
+    {
+      "id": "fbbb",
+      "name": "carolina",
+      "birthdate": "Tue Jun 04 2024 18:21:24 GMT-0500 (hora estándar de Colombia)",
+      "email": "carolina@gmail.com",
+      "password": "carolan",
+      "roleId": "1"
+    },
+    {
+      "id": "c6f1",
+      "name": "acosta",
+      "birthdate": "Wed Jun 05 2024 10:11:53 GMT-0500 (hora estándar de Colombia)",
+      "email": "brayan@gmail.com",
+      "password": "carolan",
+      "roleId": "1"
+    },
+    {
+      "id": "a82d",
+      "name": "cristian",
+      "birthdate": "Wed Jun 05 2024 11:45:50 GMT-0500 (hora estándar de Colombia)",
+      "email": "hola@gm.ail.com",
+      "password": "123123",
+      "roleId": "1"
+    }
+  ],
+  "Booking": [
+    {
+      "id": "ed48",
+      "userId": "2",
+      "bookingDate": "2024-06-05T15:53:33.630Z"
+    },
+    {
+      "id": "9094",
+      "flightId": "2024-06-05T15:54:17.746Z",
+      "userId": "2",
+      "bookingDate": "2024-06-05T15:54:17.747Z"
+    }
+  ]
+}
