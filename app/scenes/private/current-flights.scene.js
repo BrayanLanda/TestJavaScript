@@ -15,13 +15,11 @@ export const CurrentFlights = function(){
         const flights = await fetchApi('http://localhost:3000/Flight');
 
         const $flightsInfo = document.getElementById('card1');
-        console.log($flightsInfo)
         $flightsInfo.innerHTML = `
-        
         ${flights.map(flight => `
         <div class="card-body">
         <h4 class="card-title">Flights</h4>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Number Flights ${flight.number}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Number Flights: ${flight.number}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary">Origin: ${flight.origin}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary">Destination: ${flight.destination}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary">Capacity Fly: ${flight.capacity}</h6>
@@ -79,7 +77,7 @@ export const CurrentFlights = function(){
                 console.log("El usuario canceló la eliminación");
             }
         }
-        const addReserve = async function(idFly){
+        const addReserve = async function(idFly, button){
             const confirmation = confirm("Deseas realizar la reserva?");
             if(confirmation){
                 await fetchApi("http://localhost:3000/Booking",{
@@ -92,7 +90,9 @@ export const CurrentFlights = function(){
                         userId: roleId,
                         bookingDate: new Date()
                     })
-                })
+                });
+                alert('Reserva realizada')
+                button.disabled = true;
             }else{
                 alert('Reserva cancelada');
                 return;
@@ -103,7 +103,7 @@ export const CurrentFlights = function(){
         reserveBtnArray.forEach(button=>{
             button.addEventListener("click", () =>{
                 const flightId = button.getAttribute('data-reserve-id');
-                addReserve(flightId);
+                addReserve(flightId, button);
             })
         });
 
@@ -111,9 +111,16 @@ export const CurrentFlights = function(){
         const editBtnArray = [...$buttonEdit];
         editBtnArray.forEach(button => {
             button.addEventListener('click', () => {
-                NavigateTo(`/dashboard/flights/edit?flightId=${button.getAttribute("data-edit-id")}`)
-            })
+                const flightId = button.getAttribute("data-edit-id");
+                console.log("Navigating to edit page with flightId:", flightId);  // Depuración
+                if (flightId) {
+                    NavigateTo(`/dashboard/flights/edit?flightId=${flightId}`);
+                } else {
+                    console.error("No flight ID found in the button attribute");
+                }
+            });
         });
+
     };
 
     return {

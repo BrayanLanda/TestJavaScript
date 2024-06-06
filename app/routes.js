@@ -1,4 +1,5 @@
 import { NotAdmin } from "./scenes/not-admin/not-admin.scene";
+import { BookingScene } from "./scenes/private/booking.scene";
 import { CreateFlyScene } from "./scenes/private/create.fly.scene";
 import { CurrentFlights } from "./scenes/private/current-flights.scene";
 import { EditFlyScene } from "./scenes/private/edit.flights.scene";
@@ -13,6 +14,7 @@ export const routes = {
     ],
     private: [
         {path: '/dashboard', scene: CurrentFlights},
+        {path: '/dashboard/booking', scene: BookingScene},
         {path: '/dashboard/flights/create', scene: CreateFlyScene, role: ['2'] },
         {path: '/dashboard/flights/edit', scene: EditFlyScene, role: ['2'] }
     ]

@@ -8,6 +8,7 @@ export const DashboardLayout = function(pageContente, logic){
     <form class="container-fluid justify-content-start">
       <button id="btnFly" class="btn btn-outline-success me-2" type="button">Vuelos Actuales</button>
       <button id="btnCreate" class="btn btn-outline-dark me-2" type="button">Create Vuelos</button>
+      <button id="btnBooking" class="btn btn-outline-primary me-2" type="button">Bookings</button>
       <button class="btn btn-outline-secondary" type="button" id='btn-logout'>Logout</button>
     </form>
     </nav>
@@ -28,6 +29,11 @@ export const DashboardLayout = function(pageContente, logic){
             return
         }
         alert('No eres admin')
+    });
+
+    const $btnBooking = document.getElementById('btnBooking');
+    $btnBooking.addEventListener('click', () => {
+        NavigateTo('/dashboard/booking')
     });
 
     const $btnFly = document.getElementById('btnFly');
